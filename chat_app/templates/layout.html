@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Chat</title>
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div id="principal">
+            <div id="cabecalho" ><h1>Chat</h1></div>
+            <div id="autenticacao">
+                {% if user.is_authenticated %}
+                    Logado como <strong>{{ user.username }}</strong>.
+                {% else %}
+                    Usuário Deslogado
+                {% endif %}
+            </div>
+            <div id="menu">
+                <ul>
+                    <li>
+                        <a href="{% url 'index' %}">Chat</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'interlocutor_selection' %}">Lista de amigos</a>
+                        </li>
+                        <li >
+                            <a href="{% url 'logout' %}">Deslogar</a>
+                        </li>
+                    {% else %}
+                        <li >
+                            <a  href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li>
+                            <a  href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        {% block body %}
+        {% endblock %}
+    </body>
+    <div id="rodape" align="center">UNICID<br> &#9993;Grupo Allure <br> git:github.com/henriqueespadas/</div>
+</html>
