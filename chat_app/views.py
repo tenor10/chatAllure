@@ -1,14 +1,12 @@
 import traceback
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from chat_app.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.db import IntegrityError
 from django.db.models import Q
-
 
 
 def index(request):
@@ -33,28 +31,10 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(
-                request, "login.html", {"message": "Invalid username and/or password."}
+                request, "login.html", {"message": "Inválidod username ou password."}
             )
     else:
         return render(request, "login.html")
-
-
-@login_required(login_url="login")
-def message(request):
-    id_user = request.POST.get("user_id")
-    receiver = User.objects.get(pk=id_user)
-    print(receiver)
-    if request.method == "POST":
-        message_send = request.POST["message"]
-        try:
-            new_message = Message(
-                user=request.user, receiver=receiver, message=message_send
-            )
-            new_message.save()
-            return chat_page(request, id_user)
-        except Exception:
-            traceback.print_exc()
-            return chat_page(request, id_user)
 
 
 def register(request):
@@ -97,13 +77,31 @@ def interlocutor_selection(request):
 def chat_page(request, userid):
     receiver = User.objects.get(pk=userid, is_active=True)
     messages = Message.objects.filter(
-        Q(user=request.user, receiver=receiver) | Q(user=receiver, receiver=request.user))
+        Q(user=request.user, receiver=receiver)
+        | Q(user=receiver, receiver=request.user)
+    ).order_by("date_time")
     return render(
         request,
         "chat_page.html",
-        {   
+        {
             "receiver": receiver,
             "messages": messages,
         },
     )
 
+
+@login_required(login_url="login")
+def message(request):
+    id_user = request.POST.get("user_id")
+    receiver = User.objects.get(pk=id_user)
+    if request.method == "POST":
+        message_send = request.POST["message"]
+        try:
+            new_message = Message(
+                user=request.user, receiver=receiver, message=message_send
+            )
+            new_message.save()
+            return chat_page(request, id_user)
+        except Exception:
+            traceback.print_exc()
+            return chat_page(request, id_user)

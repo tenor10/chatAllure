@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,7 +7,7 @@
     </head>
     <body>
         <div id="principal">
-            <div id="cabecalho" ><h1>Chat</h1></div>
+            <div id="cabecalho" ><h1>Chat Allure</h1></div>
             <div id="autenticacao">
                 {% if user.is_authenticated %}
                     Logado como <strong>{{ user.username }}</strong>.
@@ -42,5 +41,5 @@
         {% block body %}
         {% endblock %}
     </body>
-    <div id="rodape" align="center">UNICID<br> &#9993;Grupo Allure <br> git:github.com/henriqueespadas/</div>
+    <div id="rodape" align="center">UNICID<br>Grupo Allure <br> </div>
 </html>
