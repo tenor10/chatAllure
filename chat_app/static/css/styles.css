@@ -1,12 +1,9 @@
 body {
-    background: url("../img/leilao.jpg") no-repeat fixed;
+    background: url("../img/envelope.png") no-repeat fixed;
     background-size:20%;
     background-repeat: repeat;
     font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
     font-size: 20px
-}
-div{
-
 }
 #principal {
     /* border:1px solid black; */

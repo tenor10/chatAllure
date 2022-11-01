@@ -9,7 +9,7 @@
                     {% for message in messages %}
                         <div class="chat-box" data-id="{{message.id}}">
                             <div>
-                                {{ message.date_time }} {{ message.user }} {{ message.message }}
+                                <strong> {{ message.date_time }} {{ message.user }} :</strong><i> {{ message.message }} </i>
                            </div>
                         </div>
                     {% endfor %}
@@ -24,6 +24,9 @@
             </div>
         </div>
     </div>
+    {% load static %}
+    <script src="{% static 'js/meutestejs.js' %}"></script>
+
 {% endblock %}
 
 
