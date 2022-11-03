@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="principal">
+    {% for friend in user_list %}
+    <div class= "amigos">
+        <a href="{% url 'chat_page' friend.id %}">Falar com: {{ friend.username }}</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
